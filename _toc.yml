@@ -1,0 +1,13 @@
+- file: content/front_page
+  numbered: false
+
+- part: Setup
+  chapters:
+    - file: content/00_TSP_setup
+    
+- part: Basic GRASP
+  chapters:
+    - file: content/01_basic_grasp
+
+
+
