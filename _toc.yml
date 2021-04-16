@@ -7,7 +7,7 @@
     
 - part: Basic GRASP
   chapters:
-    - file: content/01_basic_grasp
+    - file: content/01_semi_greedy
 
 
 
