@@ -9,6 +9,7 @@
   chapters:
     - file: content/01_semi_greedy
     - file: content/02_local_search
+    - file: content/03_basic_grasp
 
 
 
