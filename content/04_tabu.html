@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Local Search &#8212; Notes for GRASP</title>
+    <title>Tabu GRASP &#8212; Notes for GRASP</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -52,12 +52,10 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Basic GRASP" href="03_basic_grasp.html" />
-    <link rel="prev" title="Semi-Greedy Construction" href="01_semi_greedy.html" />
+    <link rel="next" title="Probabilistic selection of RCL size" href="05_prob_rcl.html" />
+    <link rel="prev" title="Basic GRASP" href="03_basic_grasp.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -114,14 +112,14 @@
   Basic GRASP
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="01_semi_greedy.html">
    Semi-Greedy Construction
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_local_search.html">
    Local Search
   </a>
  </li>
@@ -136,9 +134,9 @@
   Variations
  </span>
 </p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="04_tabu.html">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Tabu GRASP
   </a>
  </li>
@@ -214,7 +212,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/content/02_local_search.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/content/04_tabu.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -234,7 +232,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/TomMonks/grasp_examples/issues/new?title=Issue%20on%20page%20%2Fcontent/02_local_search.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/TomMonks/grasp_examples/issues/new?title=Issue%20on%20page%20%2Fcontent/04_tabu.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -255,7 +253,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/TomMonks/grasp_examples/main?urlpath=tree/content/02_local_search.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/TomMonks/grasp_examples/main?urlpath=tree/content/04_tabu.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -263,7 +261,7 @@
         
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/TomMonks/grasp_examples/blob/main/content/02_local_search.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+        <a class="colab-button" href="https://colab.research.google.com/github/TomMonks/grasp_examples/blob/main/content/04_tabu.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
                 title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
                     src="../_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
@@ -302,18 +300,18 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#load-data-and-generate-cost-matrix">
-   Load data and generate cost matrix
+  <a class="reference internal nav-link" href="#load-problem">
+   Load problem
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#tweaks-simple-versus-2-opt">
-   TWEAKS: Simple versus 2-Opt
+  <a class="reference internal nav-link" href="#implementation">
+   Implementation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-local-search">
-   Example local search
+  <a class="reference internal nav-link" href="#running-grasp-with-a-tabu-list">
+   Running GRASP with a tabu list
   </a>
  </li>
 </ul>
@@ -328,15 +326,9 @@
         
               <div>
                 
-  <div class="section" id="local-search">
-<h1>Local Search<a class="headerlink" href="#local-search" title="Permalink to this headline">¶</a></h1>
-<p>The second phase in GRASP involves local search.  This is an entire topic on its own!  Here we will keep things simple and look at basic local search using a <strong>hill-climbing</strong> approach</p>
-<p>Hill climbers are very simple algorithms that iteratively test neighbouring solutions to see if they find any improvement. This local search approach is often very successful at finding reasonably good solutions to a routing and scheduling problem.</p>
-<p>The major drawback is that hill climbers suffer from getting stuck in a <strong>local optimum</strong> and you can often do better by employing a more sophisticated algorithm.</p>
-<p>However, you might be surprised at how useful hill-climbers turn out to be when used in combination with other approaches in a multi-start algorithm like GRASP. One of the key benefits of hill climbers is that they are relatively fast (because they are simple). You can even set a time limit to get some of the benefit of local search without greatly extending the execution time of your algorithm.</p>
-<blockquote>
-<div><p>Although this the approach is called Hill-Climbing in the TSP you are descending a hill to the find the shortest route. The algorithm is the same, but you are maximising -1*objective (or alternatively <span class="math notranslate nohighlight">\(\dfrac{1}{objective}\)</span>).</p>
-</div></blockquote>
+  <div class="section" id="tabu-grasp">
+<h1>Tabu GRASP<a class="headerlink" href="#tabu-grasp" title="Permalink to this headline">¶</a></h1>
+<p>Here we will explore a simple variation to Basic GRASP.  A Tabu List (short term memory) will be added to the construction phase.  If a constructed tour has already been visited there is no value in re-running the local-search.  We therefore discard it and re-run the stochastic semi-greedy construction heuristic of phase 1.</p>
 <div class="section" id="imports">
 <h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
@@ -366,16 +358,18 @@
 
 <span class="kn">from</span> <span class="nn">metapy.tsp.objective</span> <span class="kn">import</span> <span class="n">OptimisedSimpleTSPObjective</span>
 
-<span class="kn">from</span> <span class="nn">metapy.local_search.hill_climbing</span> <span class="kn">import</span> <span class="p">(</span><span class="n">HillClimber</span><span class="p">,</span>
-                                               <span class="n">TweakTwoOpt</span><span class="p">,</span> 
-                                               <span class="n">SimpleTweak</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">metapy.local_search.hill_climbing</span> <span class="kn">import</span> <span class="p">(</span><span class="n">HillClimber</span><span class="p">,</span> <span class="n">TweakTwoOpt</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">metapy.tsp.grasp</span> <span class="kn">import</span> <span class="p">(</span><span class="n">SemiGreedyConstructor</span><span class="p">,</span> 
+                              <span class="n">FixedRCLSizer</span><span class="p">,</span>
+                              <span class="n">GRASP</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="load-data-and-generate-cost-matrix">
-<h2>Load data and generate cost matrix<a class="headerlink" href="#load-data-and-generate-cost-matrix" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="load-problem">
+<h2>Load problem<a class="headerlink" href="#load-problem" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#load file</span>
@@ -392,83 +386,117 @@
 </div>
 </div>
 </div>
-<div class="section" id="tweaks-simple-versus-2-opt">
-<h2>TWEAKS: Simple versus 2-Opt<a class="headerlink" href="#tweaks-simple-versus-2-opt" title="Permalink to this headline">¶</a></h2>
-<p>Hill-Climbing works by iteratively tweaking a solution to search for better neighbouring solutions. <code class="docutils literal notranslate"><span class="pre">metapy</span></code> provides two relatively straightforward tweak operators. <code class="docutils literal notranslate"><span class="pre">SimpleTweak</span></code> swaps the position of two cities at a time while <code class="docutils literal notranslate"><span class="pre">TweakTwoOpt</span></code> reverses a section of the route between two cities. Generally speaking <code class="docutils literal notranslate"><span class="pre">TweakTwoOpt</span></code> will produce better solution</p>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>Here we implement a tabu list in the <code class="docutils literal notranslate"><span class="pre">ConstructorWithMemory</span></code> class.  The class accepts a standard constructor such as <code class="docutils literal notranslate"><span class="pre">SemiGreedyConstructor</span></code> and adds a list as the memory.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">tweaker1</span> <span class="o">=</span> <span class="n">SimpleTweak</span><span class="p">()</span>
-<span class="n">tweaker1</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">tour</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
-<span class="n">tour</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ConstructorWithMemory</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Provides a construction heuristic with a short term memory</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constructor</span><span class="p">,</span> <span class="n">memory_size</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Constructor method</span>
+<span class="sd">        </span>
+<span class="sd">        Params:</span>
+<span class="sd">        -------</span>
+<span class="sd">        constructor: Object</span>
+<span class="sd">            Implements build() and returns a solution</span>
+<span class="sd">            </span>
+<span class="sd">        memory_size, int, optional (default=100)</span>
+<span class="sd">            size of tabu list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">constructor</span> <span class="o">=</span> <span class="n">constructor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">memory_size</span> <span class="o">=</span> <span class="n">memory_size</span>
+        <span class="c1"># memory implemented as list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
+        
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Run the stochastic construction heuristic</span>
+<span class="sd">        </span>
+<span class="sd">        Re-runs heuristic if results is within memory</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constructor</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        <span class="k">while</span> <span class="nb">str</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">:</span>
+            <span class="n">solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constructor</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        
+        <span class="c1"># if at capacity remove oldest solution</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory_size</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">solution</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">solution</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 1, 2, 3, 4, 9, 6, 7, 8, 5])
+</div>
+</div>
+<div class="section" id="running-grasp-with-a-tabu-list">
+<h2>Running GRASP with a tabu list<a class="headerlink" href="#running-grasp-with-a-tabu-list" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compose_grasp</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">rcl_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">memory_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Compose a GRASP algorithm with a variation to include a TABU list</span>
+<span class="sd">    in the construction phase.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># objective function</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">OptimisedSimpleTSPObjective</span><span class="p">(</span><span class="o">-</span><span class="n">matrix</span><span class="p">)</span>
+
+    <span class="c1"># Two-opt tweaks</span>
+    <span class="n">tweaker</span> <span class="o">=</span> <span class="n">TweakTwoOpt</span><span class="p">()</span>
+
+    <span class="c1"># local search = first improvement hill climbing</span>
+    <span class="n">ls</span> <span class="o">=</span> <span class="n">HillClimber</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">tour</span><span class="p">,</span> <span class="n">tweaker</span><span class="p">)</span>
+
+    <span class="c1"># semi-greedy constructor and RCL sizer</span>
+    <span class="n">sizer</span> <span class="o">=</span> <span class="n">FixedRCLSizer</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">rcl_size</span><span class="p">)</span>
+    <span class="n">constructor</span> <span class="o">=</span> <span class="n">SemiGreedyConstructor</span><span class="p">(</span><span class="n">sizer</span><span class="p">,</span> <span class="n">tour</span><span class="p">,</span> <span class="o">-</span><span class="n">matrix</span><span class="p">,</span> 
+                                        <span class="n">random_seed</span><span class="o">=</span><span class="n">random_seed</span><span class="p">)</span>
+    <span class="c1"># add memory to constructor</span>
+    <span class="n">constructor</span> <span class="o">=</span> <span class="n">ConstructorWithMemory</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">memory_size</span><span class="o">=</span><span class="n">memory_size</span><span class="p">)</span>
+
+    <span class="c1"># bring ingredients together in the GRASP framework</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">GRASP</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">ls</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">solver</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">tweaker2</span> <span class="o">=</span> <span class="n">TweakTwoOpt</span><span class="p">()</span>
-<span class="n">tweaker2</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">tour</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">tour</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 3, 2, 1, 4, 5, 6, 7, 8, 9])
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="example-local-search">
-<h2>Example local search<a class="headerlink" href="#example-local-search" title="Permalink to this headline">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic First Improvement Hill Climber</span>
-
-<span class="c1"># create a tour (full 70 cities)</span>
-<span class="n">tour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">70</span><span class="p">)</span>
-<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-
-<span class="c1"># random init solution (operation in place)</span>
-<span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">tour</span><span class="p">)</span>
-
-<span class="c1"># create TSP objective (negate costs)</span>
-<span class="n">objective</span> <span class="o">=</span> <span class="n">OptimisedSimpleTSPObjective</span><span class="p">(</span><span class="o">-</span><span class="n">matrix</span><span class="p">)</span>
-
-<span class="c1"># create Hill climbing algorithm</span>
-<span class="n">solver</span> <span class="o">=</span> <span class="n">HillClimber</span><span class="p">(</span><span class="n">objective</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span> 
-                     <span class="n">init_solution</span><span class="o">=</span><span class="n">tour</span><span class="p">,</span> 
-                     <span class="n">tweaker</span><span class="o">=</span><span class="n">TweakTwoOpt</span><span class="p">())</span>
-
-<span class="c1"># run the local search</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cities</span><span class="p">))</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">compose_grasp</span><span class="p">(</span><span class="n">random_seed</span><span class="o">=</span><span class="mi">101</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Running tabu GRASP&quot;</span><span class="p">)</span>
 <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
 
-<span class="c1"># output results</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">** Hill Climber First Improvement OUTPUT ***&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;best cost:</span><span class="se">\t</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">best_cost</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">** GRASP OUTPUT ***&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;best cost:</span><span class="se">\t</span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">best</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;best solutions:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">best_solutions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_tour</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">best_solutions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cities</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">best_solution</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_tour</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">best_solution</span><span class="p">,</span> <span class="n">cities</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>** Hill Climber First Improvement OUTPUT ***
-best cost:	-838.0
-best solutions:
-[63 64 55 10 47 66 53 32 11 59 51  9  4 52  5 40 42 16 20 33 61 38 60 39
- 44 24 45 26 67 43 29 19 13 27  7 25 48 54 18  1  6 31  2 41 17  3 23 14
- 56 34 68 30 69 12 28 35  0 15 50 49 57 36 46 22 37 58 21 62 65  8]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running tabu GRASP
 </pre></div>
 </div>
-<img alt="../_images/02_local_search_12_1.png" src="../_images/02_local_search_12_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>** GRASP OUTPUT ***
+best cost:	-724.0
+best solutions:
+[ 0 35 22 15 46 36 57  4 52  5 40 41 17  3  1  6 31  2 43 67 42 16 59 51
+  9 49 50 64 63 10 55 66 47 53 61 32 11 20 33  8 39 60 38 44 24 45 26 29
+ 19 13 27  7 25 48 54 18 23 14 56 65 21 62 58 37 68 30 12 69 34 28]
+</pre></div>
+</div>
+<img alt="../_images/04_tabu_12_2.png" src="../_images/04_tabu_12_2.png" />
 </div>
 </div>
 </div>
@@ -499,8 +527,8 @@ best solutions:
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="01_semi_greedy.html" title="previous page">Semi-Greedy Construction</a>
-    <a class='right-next' id="next-link" href="03_basic_grasp.html" title="next page">Basic GRASP</a>
+    <a class='left-prev' id="prev-link" href="03_basic_grasp.html" title="previous page">Basic GRASP</a>
+    <a class='right-next' id="next-link" href="05_prob_rcl.html" title="next page">Probabilistic selection of RCL size</a>
 
         </div>
         

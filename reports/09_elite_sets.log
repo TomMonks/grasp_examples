@@ -22,14 +22,17 @@ from metapy.tsp.euclidean import gen_matrix, plot_tour
 
 from metapy.tsp.objective import OptimisedSimpleTSPObjective
 
-from metapy.local_search.hill_climbing import (HillClimber,
-                                               TweakTwoOpt, 
-                                               SimpleTweak)
+from metapy.local_search.hill_climbing import (HillClimber, TweakTwoOpt)
+
+from metapy.tsp.grasp import (SemiGreedyConstructor,
+                              FixedRCLSizer,
+                              MonitoredLocalSearch,
+                              GRASP)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m<ipython-input-3-036d53fcfb01>[0m in [0;36m<module>[0;34m[0m
+[0;32m<ipython-input-3-8b6a4de5f59c>[0m in [0;36m<module>[0;34m[0m
 [0;32m----> 1[0;31m [0;32mfrom[0m [0mmetapy[0m[0;34m.[0m[0mtsp[0m [0;32mimport[0m [0mtsp_io[0m [0;32mas[0m [0mio[0m[0;34m[0m[0;34m[0m[0m
 [0m[1;32m      2[0m [0;32mfrom[0m [0mmetapy[0m[0;34m.[0m[0mtsp[0m[0;34m.[0m[0meuclidean[0m [0;32mimport[0m [0mgen_matrix[0m[0;34m,[0m [0mplot_tour[0m[0;34m[0m[0;34m[0m[0m
 [1;32m      3[0m [0;34m[0m[0m

@@ -25,8 +25,8 @@
     href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -40,14 +40,11 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -57,7 +54,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Basic GRASP" href="03_basic_grasp.html" />
+    <link rel="next" title="Reactive GRASP" href="06_reactive_grasp.html" />
+    <link rel="prev" title="Tabu GRASP" href="04_tabu.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -137,9 +135,41 @@
  </span>
 </p>
 <ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_tabu.html">
+   Tabu GRASP
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Probabilistic selection of RCL size
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_reactive_grasp.html">
+   Reactive GRASP
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_random_greedy.html">
+   Random - Greedy
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Path Relinking
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="pr_front_page.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_elite_sets.html">
+   Elite Set Tracking
   </a>
  </li>
 </ul>
@@ -292,6 +322,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 </pre></div>
 </div>
 </div>
@@ -300,8 +331,9 @@
 <h2><code class="docutils literal notranslate"><span class="pre">metapy</span></code> imports<a class="headerlink" href="#metapy-imports" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># uncomment and run if using Google Colab</span>
-<span class="c1"># !pip install meta-py==0.2.1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install metapy if running in Google Colab</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+    <span class="o">!</span>pip install meta-py
 </pre></div>
 </div>
 </div>
@@ -389,7 +421,8 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_grasp</span><span class="p">(</span><span class="n">tour</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">rcl_min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rcl_max</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">seeds</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_grasp</span><span class="p">(</span><span class="n">tour</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">rcl_min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rcl_max</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> 
+              <span class="n">seeds</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
     <span class="c1"># objective function</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">OptimisedSimpleTSPObjective</span><span class="p">(</span><span class="o">-</span><span class="n">matrix</span><span class="p">)</span>
 
@@ -401,7 +434,8 @@
 
     <span class="c1"># semi-greedy constructor and RCL sizer</span>
     <span class="n">sizer</span> <span class="o">=</span> <span class="n">RandomRCLSizer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">rcl_min</span><span class="p">,</span> <span class="n">rcl_max</span><span class="p">),</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">constructor</span> <span class="o">=</span> <span class="n">SemiGreedyConstructor</span><span class="p">(</span><span class="n">sizer</span><span class="p">,</span> <span class="n">tour</span><span class="p">,</span> <span class="o">-</span><span class="n">matrix</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">constructor</span> <span class="o">=</span> <span class="n">SemiGreedyConstructor</span><span class="p">(</span><span class="n">sizer</span><span class="p">,</span> <span class="n">tour</span><span class="p">,</span> <span class="o">-</span><span class="n">matrix</span><span class="p">,</span> 
+                                        <span class="n">random_seed</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="c1"># GRASP framework</span>
     <span class="n">solver</span> <span class="o">=</span> <span class="n">GRASP</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">ls</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
@@ -428,8 +462,9 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running GRASP with probablistic selection of RCL size
-
-** GRASP OUTPUT ***
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>** GRASP OUTPUT ***
 best cost:	-724.0
 best solutions:
 [ 0 35 22 15 46 36 57 49 50 64 63 10 55 66 47 53 32 59 51  9  4 52  5 40
@@ -437,7 +472,7 @@ best solutions:
   2 31 41 17  3  1  6 18 23 14 56 34 69 28 12 30 68 37 58 21 62 65]
 </pre></div>
 </div>
-<img alt="../_images/05_prob_rcl_11_1.png" src="../_images/05_prob_rcl_11_1.png" />
+<img alt="../_images/05_prob_rcl_11_2.png" src="../_images/05_prob_rcl_11_2.png" />
 </div>
 </div>
 </div>
@@ -468,7 +503,8 @@ best solutions:
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="03_basic_grasp.html" title="previous page">Basic GRASP</a>
+    <a class='left-prev' id="prev-link" href="04_tabu.html" title="previous page">Tabu GRASP</a>
+    <a class='right-next' id="next-link" href="06_reactive_grasp.html" title="next page">Reactive GRASP</a>
 
         </div>
         

@@ -1,0 +1,761 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reactive GRASP &#8212; Notes for GRASP</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Random - Greedy" href="07_random_greedy.html" />
+    <link rel="prev" title="Probabilistic selection of RCL size" href="05_prob_rcl.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Notes for GRASP</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="front_page.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Setup
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_TSP_setup.html">
+   Travel Salesman Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_TSP_setup.html#visualising-a-tour">
+   Visualising a tour
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Basic GRASP
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_semi_greedy.html">
+   Semi-Greedy Construction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_local_search.html">
+   Local Search
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_grasp.html">
+   Basic GRASP
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Variations
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_tabu.html">
+   Tabu GRASP
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_prob_rcl.html">
+   Probabilistic selection of RCL size
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Reactive GRASP
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_random_greedy.html">
+   Random - Greedy
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Path Relinking
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="pr_front_page.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_elite_sets.html">
+   Elite Set Tracking
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/content/06_reactive_grasp.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/TomMonks/grasp_examples"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/TomMonks/grasp_examples/issues/new?title=Issue%20on%20page%20%2Fcontent/06_reactive_grasp.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/TomMonks/grasp_examples/main?urlpath=tree/content/06_reactive_grasp.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/TomMonks/grasp_examples/blob/main/content/06_reactive_grasp.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#metapy-imports">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     metapy
+    </span>
+   </code>
+   imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-problem">
+   Load problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implementation">
+   Implementation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-reactive-grasp">
+   Running Reactive GRASP
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="reactive-grasp">
+<h1>Reactive GRASP<a class="headerlink" href="#reactive-grasp" title="Permalink to this headline">¶</a></h1>
+<p>In reactive GRASP the probability of selecting a RCL size is proportional to historical performance of this RCL size.  Here GRASP <strong>learns</strong> the bias of RCL sizes needed to get the best results.</p>
+<p>Let <span class="math notranslate nohighlight">\(q_i = f^* / A_i\)</span>
+and <span class="math notranslate nohighlight">\(p_i = \dfrac{q_i}{\sum_{j=1}^{m} q_j}\)</span></p>
+<p>where</p>
+<p><span class="math notranslate nohighlight">\(f^*\)</span> is the incumbent (best cost);
+<span class="math notranslate nohighlight">\(A_i\)</span> is the mean cost found with <span class="math notranslate nohighlight">\(r_i\)</span></p>
+<p>larger <span class="math notranslate nohighlight">\(q_i\)</span> indicates more suitable values of <span class="math notranslate nohighlight">\(r_i\)</span></p>
+<div class="section" id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="metapy-imports">
+<h2><code class="docutils literal notranslate"><span class="pre">metapy</span></code> imports<a class="headerlink" href="#metapy-imports" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install metapy if running in Google Colab</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+    <span class="o">!</span>pip install meta-py
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">metapy.tsp</span> <span class="kn">import</span> <span class="n">tsp_io</span> <span class="k">as</span> <span class="n">io</span>
+<span class="kn">from</span> <span class="nn">metapy.tsp.euclidean</span> <span class="kn">import</span> <span class="n">gen_matrix</span><span class="p">,</span> <span class="n">plot_tour</span>
+
+<span class="kn">from</span> <span class="nn">metapy.tsp.objective</span> <span class="kn">import</span> <span class="n">OptimisedSimpleTSPObjective</span>
+
+<span class="kn">from</span> <span class="nn">metapy.local_search.hill_climbing</span> <span class="kn">import</span> <span class="p">(</span><span class="n">HillClimber</span><span class="p">,</span> <span class="n">TweakTwoOpt</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">metapy.tsp.grasp</span> <span class="kn">import</span> <span class="p">(</span><span class="n">SemiGreedyConstructor</span><span class="p">,</span> <span class="n">GRASP</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load-problem">
+<h2>Load problem<a class="headerlink" href="#load-problem" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#load file</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/TomMonks/meta-py/main/data/st70.tsp&#39;</span>
+
+<span class="c1">#number of rows in the file that are meta_data</span>
+<span class="n">md_rows</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="c1">#read the coordinates</span>
+<span class="n">cities</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">read_coordinates</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">md_rows</span><span class="p">)</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">gen_matrix</span><span class="p">(</span><span class="n">cities</span><span class="p">,</span> <span class="n">as_integer</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>To implement we create two new classes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MonitoredLocalSearch</span></code> - wraps HillClimber and notifies observering classes when a GRASP local search phase is complete.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ReactiveRCLSizer</span></code> - observes GRASP local search, tracks average performance of RCL sizes, and updates prob of choosing different r’s at a user specified frequency:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MonitoredLocalSearch</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Extends a local search class and provides the observer pattern.</span>
+<span class="sd">    An external object can observe the local search object and catch the</span>
+<span class="sd">    termination event (end of local search).  The observer is notified and</span>
+<span class="sd">    passed the results of the local search.</span>
+
+<span class="sd">    Use cases: </span>
+<span class="sd">    ----------</span>
+<span class="sd">    In GRASP this is useful for an algorithm sizing the RCL and learning </span>
+<span class="sd">    on average how different sizes of RCL perform.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">local_search</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Constructor:</span>
+<span class="sd">        </span>
+<span class="sd">        Params:</span>
+<span class="sd">        ------</span>
+<span class="sd">        local_search: Object</span>
+<span class="sd">            Must implement .solve(), best_cost, best_solution</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_search</span> <span class="o">=</span> <span class="n">local_search</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observers</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">def</span> <span class="nf">register_observer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observer</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        register an object to observe the local search</span>
+<span class="sd">        </span>
+<span class="sd">        The observer should implement </span>
+<span class="sd">        local_search_terminated(*args, **kwargs)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">set_init_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Set the initial solution</span>
+<span class="sd">        </span>
+<span class="sd">        Params:</span>
+<span class="sd">        --------</span>
+<span class="sd">        solution: np.ndarray</span>
+<span class="sd">            vector representing the initial solution</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_search</span><span class="o">.</span><span class="n">set_init_solution</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Run the local search.  </span>
+<span class="sd">        At the end of the run all observers are notified.</span>
+<span class="sd">        &#39;&#39;&#39;</span>    
+        <span class="c1"># run local search</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_search</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+        
+        <span class="c1"># notify observers after search terminates.</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_search</span><span class="o">.</span><span class="n">best_cost</span>
+        <span class="n">solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_search</span><span class="o">.</span><span class="n">best_solutions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notify_observers</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">solution</span><span class="p">)</span>
+        
+    
+    <span class="k">def</span> <span class="nf">notify_observers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Observers must implement `local_search_terminated()`</span>
+<span class="sd">        method.</span>
+<span class="sd">        </span>
+<span class="sd">        Params:</span>
+<span class="sd">        ------</span>
+<span class="sd">        *args: list</span>
+<span class="sd">            variable number of arguments</span>
+<span class="sd">            </span>
+<span class="sd">        **kwargs: dict</span>
+<span class="sd">            key word arguments</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observers</span><span class="p">:</span>
+            <span class="n">o</span><span class="o">.</span><span class="n">local_search_terminated</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_get_best_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        best cost from internal local_search object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_search</span><span class="o">.</span><span class="n">best_cost</span>
+    
+    <span class="k">def</span> <span class="nf">_get_best_solutions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        get best solutions from local_search object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_search</span><span class="o">.</span><span class="n">best_solutions</span>
+    
+    <span class="n">best_cost</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_best_cost</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s1">&#39;best cost&#39;</span><span class="p">)</span>
+    <span class="n">best_solutions</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_best_solutions</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s1">&#39;best solution&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ReactiveRCLSizer</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Dynamically update the probability of selecting a </span>
+<span class="sd">    value of r for the size of the RCL.</span>
+<span class="sd">    </span>
+<span class="sd">    Implements Reactive GRASP.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_list</span><span class="p">,</span> <span class="n">local_search</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        </span>
+<span class="sd">        Params:</span>
+<span class="sd">        -------</span>
+<span class="sd">        r_list: list</span>
+<span class="sd">            vector of sizes for RCL e.g. [1, 2, 3, 4, 5]</span>
+<span class="sd">            </span>
+<span class="sd">        local_search: MonitoredLocalSearch</span>
+<span class="sd">            local_search to monitor</span>
+<span class="sd">            </span>
+<span class="sd">        freq: int, optional (default=None)</span>
+<span class="sd">            Frequency in iterations at which the probabilities are updated.</span>
+<span class="sd">            When set to None it defaults to the length of r_list * 2</span>
+<span class="sd">            </span>
+<span class="sd">        random_seed: int, optional (default=None)</span>
+<span class="sd">            Control random sampling for reproducible result</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># list of r sizes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_list</span> <span class="o">=</span> <span class="n">r_list</span>
+        
+        <span class="c1"># set of indexes to work with probabilities</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r_list</span><span class="p">))</span>
+    
+        <span class="c1"># probability of choosing r (initially uniform)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r_list</span><span class="p">),</span> <span class="mi">1</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">r_list</span><span class="p">))</span>
+        
+        <span class="c1"># mean performance of size r</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r_list</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+        
+        <span class="c1"># runs of size r</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allocations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r_list</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        
+        <span class="c1"># local search to monitor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_search</span> <span class="o">=</span> <span class="n">local_search</span>
+        
+        <span class="c1"># frequency of updating probs</span>
+        <span class="k">if</span> <span class="n">freq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r_list</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="n">freq</span>
+        
+        <span class="c1"># number of iterations within frequency</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="c1"># current r index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        
+        <span class="c1"># to init run one of each r value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init</span> <span class="o">=</span> <span class="kc">True</span>
+        
+        <span class="c1"># imcumbent solution cost</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_cost</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        
+        <span class="c1"># register sizer as observer of the local search</span>
+        <span class="n">local_search</span><span class="o">.</span><span class="n">register_observer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        
+        <span class="c1"># random no. gen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">random_seed</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">local_search_terminated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Termination of the local search</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># iteration complete</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="c1"># get the best cost found in the iteration</span>
+        <span class="n">iter_cost</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># record iteration took plaxe with index i</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allocations</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="c1"># update running mean</span>
+        <span class="n">mean_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">means</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">allocations</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">means</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">iter_cost</span> <span class="o">-</span> <span class="n">mean_x</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_r</span><span class="p">()</span>
+        
+        <span class="c1"># update incumbent cost if required</span>
+        <span class="k">if</span> <span class="n">iter_cost</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_cost</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best_cost</span> <span class="o">=</span> <span class="n">iter_cost</span>
+        
+        <span class="c1"># update probs if freq met.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">init</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_probability</span><span class="p">()</span>
+            
+        
+    <span class="k">def</span> <span class="nf">update_probability</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Let $q_i = f^* / A_i$</span>
+<span class="sd">        and $p_i = `\dfrac{q_i}{\sum_{j=1}^{m} q_j}$</span>
+<span class="sd">        </span>
+<span class="sd">        where</span>
+<span class="sd">        </span>
+<span class="sd">        $f^*$ is the incumbent (cost)</span>
+<span class="sd">        $A_i$ is the mean cost found with r_i</span>
+<span class="sd">        </span>
+<span class="sd">        larger q_i indicates more suitable values of r_i</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_cost</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">means</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">probs</span> <span class="o">=</span> <span class="n">q</span> <span class="o">/</span> <span class="n">q</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">update_r</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        update the size of r</span>
+<span class="sd">        </span>
+<span class="sd">        Note that the implementation ensures that all r values are run</span>
+<span class="sd">        for at least one iteration of the algorithm.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># initial bit of logic makes sure there is at least one run of all probabilities</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">init</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r_list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">init</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">probs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">probs</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Return the selected size of the RCL</span>
+<span class="sd">        </span>
+<span class="sd">        The selection is done using a discrete distribution</span>
+<span class="sd">        self.r_probs.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+       
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="running-reactive-grasp">
+<h2>Running Reactive GRASP<a class="headerlink" href="#running-reactive-grasp" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compose_grasp</span><span class="p">(</span><span class="n">tour</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rcl_min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rcl_max</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> 
+                  <span class="n">seeds</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Compose the REACTIVE GRASP algorithm    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># objective function</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">OptimisedSimpleTSPObjective</span><span class="p">(</span><span class="o">-</span><span class="n">matrix</span><span class="p">)</span>
+
+    <span class="c1"># Two-opt tweaks</span>
+    <span class="n">tweaker</span> <span class="o">=</span> <span class="n">TweakTwoOpt</span><span class="p">()</span>
+
+    <span class="c1"># local search = first improvement hill climbing</span>
+    <span class="n">ls</span> <span class="o">=</span> <span class="n">MonitoredLocalSearch</span><span class="p">(</span><span class="n">HillClimber</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">tour</span><span class="p">,</span> <span class="n">tweaker</span><span class="p">))</span>
+
+    <span class="c1"># semi-greedy constructor and RCL sizer</span>
+    <span class="n">sizer</span> <span class="o">=</span> <span class="n">ReactiveRCLSizer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">rcl_min</span><span class="p">,</span> <span class="n">rcl_max</span><span class="p">),</span> <span class="n">ls</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="n">freq</span><span class="p">,</span> 
+                             <span class="n">random_seed</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">constructor</span> <span class="o">=</span> <span class="n">SemiGreedyConstructor</span><span class="p">(</span><span class="n">sizer</span><span class="p">,</span> <span class="n">tour</span><span class="p">,</span> <span class="o">-</span><span class="n">matrix</span><span class="p">,</span> 
+                                        <span class="n">random_seed</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># GRASP framework</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">GRASP</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">ls</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">solver</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cities</span><span class="p">))</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">compose_grasp</span><span class="p">(</span><span class="n">tour</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">seeds</span><span class="o">=</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">101</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Running REACTIVE GRASP&quot;</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">** GRASP OUTPUT ***&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;best cost:</span><span class="se">\t</span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">best</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;best solutions:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">best_solution</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_tour</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">best_solution</span><span class="p">,</span> <span class="n">cities</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running REACTIVE GRASP
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>** GRASP OUTPUT ***
+best cost:	-738.0
+best solutions:
+[ 0 35 22 12 28 69 34 56 14 23  1 18 54 48 25  7 27  2 31  6  3 17 41  5
+ 40 43 13 19 29 67 26 45 24 44 38 60 39  8 42 16 20 33 11 59 32 61 53 47
+ 66 10 63 64 55 50 51  9  4 52 65 62 21 58 68 30 37 46 36 49 57 15]
+</pre></div>
+</div>
+<img alt="../_images/06_reactive_grasp_13_2.png" src="../_images/06_reactive_grasp_13_2.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "TomMonks/grasp_examples",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="05_prob_rcl.html" title="previous page">Probabilistic selection of RCL size</a>
+    <a class='right-next' id="next-link" href="07_random_greedy.html" title="next page">Random - Greedy</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Thomas Monks<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
