@@ -15,6 +15,7 @@
   chapters:
     - file: content/05_prob_rcl
     - file: content/06_reactive_grasp
+    - file: content/07_random_greedy
 
 
 
