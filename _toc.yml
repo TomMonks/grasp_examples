@@ -17,6 +17,11 @@
     - file: content/05_prob_rcl
     - file: content/06_reactive_grasp
     - file: content/07_random_greedy
+    
+- part: Path Relinking
+  chapters:
+    - file: content/pr_front_page
+    - file: content/09_elite_sets
 
 
 
