@@ -172,6 +172,21 @@
    Elite Set Tracking
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_basic_pr.html">
+   TSP Path Relinking
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_grasp_pr.html">
+   GRASP+PR
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_evo_pr.html">
+   Evolutionary Path Relinking
+  </a>
+ </li>
 </ul>
 
 </nav> <!-- To handle the deprecated key -->
@@ -558,7 +573,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">70</span><span class="p">)</span>
-<span class="n">solver</span> <span class="o">=</span> <span class="n">get_grasp</span><span class="p">(</span><span class="n">tour</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">101</span><span class="p">)</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">get_grasp</span><span class="p">(</span><span class="n">tour</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">101</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Running Basic GRASP.&quot;</span><span class="p">)</span>
 <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
 

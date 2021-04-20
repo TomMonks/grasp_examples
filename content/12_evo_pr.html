@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evolutionary Path Relinking &#8212; Notes for GRASP</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="GRASP+PR" href="11_grasp_pr.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Notes for GRASP</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="front_page.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Setup
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_TSP_setup.html">
+   Travel Salesman Problem
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_TSP_setup.html#visualising-a-tour">
+   Visualising a tour
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Basic GRASP
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_semi_greedy.html">
+   Semi-Greedy Construction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_local_search.html">
+   Local Search
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_grasp.html">
+   Basic GRASP
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Variations
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_tabu.html">
+   Tabu GRASP
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_prob_rcl.html">
+   Probabilistic selection of RCL size
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_reactive_grasp.html">
+   Reactive GRASP
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_random_greedy.html">
+   Random - Greedy
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Path Relinking
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="pr_front_page.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_elite_sets.html">
+   Elite Set Tracking
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_basic_pr.html">
+   TSP Path Relinking
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_grasp_pr.html">
+   GRASP+PR
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Evolutionary Path Relinking
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/content/12_evo_pr.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/TomMonks/grasp_examples"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/TomMonks/grasp_examples/issues/new?title=Issue%20on%20page%20%2Fcontent/12_evo_pr.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/TomMonks/grasp_examples/main?urlpath=tree/content/12_evo_pr.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/TomMonks/grasp_examples/blob/main/content/12_evo_pr.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#metapy-imports">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     metapy
+    </span>
+   </code>
+   imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-problem">
+   Load problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#post-processing-step-implementation">
+   Post processing step implementation
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="evolutionary-path-relinking">
+<h1>Evolutionary Path Relinking<a class="headerlink" href="#evolutionary-path-relinking" title="Permalink to this headline">¶</a></h1>
+<p>In Evolutionary Path Relinking we <strong>relink solutions in the elite set</strong></p>
+<blockquote>
+<div><p>This operation can be completed periodically (e.g. every 10 iterations) or as a post processing step when the all iterations of the algorithm are complete or a time limit has been reached.</p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="section" id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="metapy-imports">
+<h2><code class="docutils literal notranslate"><span class="pre">metapy</span></code> imports<a class="headerlink" href="#metapy-imports" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install metapy if running in Google Colab</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+    <span class="o">!</span>pip install meta-py
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">metapy.tsp</span> <span class="kn">import</span> <span class="n">tsp_io</span> <span class="k">as</span> <span class="n">io</span>
+<span class="kn">from</span> <span class="nn">metapy.tsp.euclidean</span> <span class="kn">import</span> <span class="n">gen_matrix</span><span class="p">,</span> <span class="n">plot_tour</span>
+
+<span class="kn">from</span> <span class="nn">metapy.tsp.objective</span> <span class="kn">import</span> <span class="n">OptimisedSimpleTSPObjective</span>
+
+<span class="kn">from</span> <span class="nn">metapy.local_search.hill_climbing</span> <span class="kn">import</span> <span class="p">(</span><span class="n">HillClimber</span><span class="p">,</span> <span class="n">TweakTwoOpt</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">metapy.tsp.grasp</span> <span class="kn">import</span> <span class="p">(</span><span class="n">SemiGreedyConstructor</span><span class="p">,</span>
+                              <span class="n">FixedRCLSizer</span><span class="p">,</span>
+                              <span class="n">RandomRCLSizer</span><span class="p">,</span>
+                              <span class="n">MonitoredLocalSearch</span><span class="p">,</span>
+                              <span class="n">GRASP</span><span class="p">,</span>
+                              <span class="n">EliteSet</span><span class="p">,</span> 
+                              <span class="n">GRASPPlusPathRelinking</span><span class="p">,</span>
+                              <span class="n">TSPPathRelinker</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load-problem">
+<h2>Load problem<a class="headerlink" href="#load-problem" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#load file</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/TomMonks/meta-py/main/data/st70.tsp&#39;</span>
+
+<span class="c1">#number of rows in the file that are meta_data</span>
+<span class="n">md_rows</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="c1">#read the coordinates</span>
+<span class="n">cities</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">read_coordinates</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">md_rows</span><span class="p">)</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">gen_matrix</span><span class="p">(</span><span class="n">cities</span><span class="p">,</span> <span class="n">as_integer</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="post-processing-step-implementation">
+<h2>Post processing step implementation<a class="headerlink" href="#post-processing-step-implementation" title="Permalink to this headline">¶</a></h2>
+<p>We add two (more!) classes to our GRASP+PR framework:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">EvolutionaryPathRelinker</span></code>: a simple class that generates all pairwise combinations of solutions in <code class="docutils literal notranslate"><span class="pre">EliteSet</span></code>.  The class accepts a <code class="docutils literal notranslate"><span class="pre">relinker</span></code> argument that provides the logic for relinking all solutions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GRASPPlusEvoPathRelinking</span></code> extends <code class="docutils literal notranslate"><span class="pre">GRASPPlusPathRelinking</span></code>.  It simply delegates the standard GRASP+PR to its super class and then calls the evolutionary path relinking logic as a post processing step.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EvolutionaryPathRelinker</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Creates all pairwise combinations of solutions in </span>
+<span class="sd">    the elite set and runs path relinking on all combinations.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tracker</span><span class="p">,</span> <span class="n">relinker</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracker</span> <span class="o">=</span> <span class="n">tracker</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relinker</span> <span class="o">=</span> <span class="n">relinker</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_solution</span> <span class="o">=</span> <span class="kc">None</span>
+    
+    <span class="k">def</span> <span class="nf">relink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">best_solution</span><span class="p">,</span> <span class="n">best_cost</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best</span> <span class="o">=</span> <span class="n">best_cost</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_solution</span> <span class="o">=</span> <span class="n">best_solution</span>
+        <span class="n">pairwise</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_pairwise_combinations</span><span class="p">()</span>
+        
+        <span class="k">for</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="ow">in</span> <span class="n">pairwise</span><span class="p">:</span>
+            <span class="n">new_s</span><span class="p">,</span> <span class="n">new_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relinker</span><span class="o">.</span><span class="n">relink</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+            <span class="c1"># update elite set</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tracker</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_s</span><span class="p">,</span> <span class="n">new_cost</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">new_cost</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">best</span> <span class="o">=</span> <span class="n">new_cost</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">best_solution</span> <span class="o">=</span> <span class="n">new_s</span>
+            
+        <span class="n">elite_solution</span><span class="p">,</span> <span class="n">elite_best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracker</span><span class="o">.</span><span class="n">get_best_solution</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="n">elite_best</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Evo PR found a better better solution&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best</span> <span class="o">=</span> <span class="n">elite_best</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best_solution</span> <span class="o">=</span> <span class="n">elite_solution</span>
+        
+    <span class="k">def</span> <span class="nf">generate_pairwise_combinations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracker</span><span class="o">.</span><span class="n">solutions</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GRASPPlusEvoPathRelinking</span><span class="p">(</span><span class="n">GRASPPlusPathRelinking</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Evolutionary path relinking as post processing step.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constructor</span><span class="p">,</span> <span class="n">local_search</span><span class="p">,</span> <span class="n">relinker</span><span class="p">,</span> <span class="n">evo_relinker</span><span class="p">,</span>
+                 <span class="n">elite_tracker</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">time_limit</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        </span>
+<span class="sd">        Params:</span>
+<span class="sd">        ------</span>
+<span class="sd">        constructor: object</span>
+<span class="sd">            semi-greedy construction logic</span>
+<span class="sd">            </span>
+<span class="sd">        local_search: object</span>
+<span class="sd">            local search logic for 2nd phase of GRASP</span>
+<span class="sd">            </span>
+<span class="sd">        relinker: object</span>
+<span class="sd">            TSP path relinking logic</span>
+<span class="sd">            </span>
+<span class="sd">        evo_relinker: object</span>
+<span class="sd">            Evolutionary path relinking logic</span>
+<span class="sd">            </span>
+<span class="sd">        elite_tracker: object</span>
+<span class="sd">            logic to track and update the elite set</span>
+<span class="sd">            </span>
+<span class="sd">        max_iter: int, optional, (default=1000)</span>
+<span class="sd">            maximum number of iterations</span>
+<span class="sd">            </span>
+<span class="sd">        time_limit: float, optional (default = np.inf)</span>
+<span class="sd">            algorithm time limit.  Will override max_iter</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">local_search</span><span class="p">,</span> <span class="n">relinker</span><span class="p">,</span>
+                         <span class="n">elite_tracker</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">time_limit</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">evo_relinker</span> <span class="o">=</span> <span class="n">evo_relinker</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracker</span> <span class="o">=</span> <span class="n">elite_tracker</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_solution</span> <span class="o">=</span> <span class="kc">None</span>
+        
+    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Run GRASP with evolutionary path relinking</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># run GRASP with path relinking</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_updates_before_evo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elite_tracker</span><span class="o">.</span><span class="n">n_updates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elite_tracker</span><span class="o">.</span><span class="n">n_updates</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;GRASP complete =&gt; running evolutionary path relinking&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># run evolutionary path relinking</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">evo_relinker</span><span class="o">.</span><span class="n">relink</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_solution</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">evo_relinker</span><span class="o">.</span><span class="n">best</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evo_relinker</span><span class="o">.</span><span class="n">best</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best_solution</span> <span class="o">=</span> <span class="n">solf</span><span class="o">.</span><span class="n">evo_relinker</span><span class="o">.</span><span class="n">best_solution</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compose_grasp</span><span class="p">(</span><span class="n">tour</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">rcl_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">elite_set_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pr_trunc</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                  <span class="n">seeds</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Create a GRASP with EVO path relinking algorithm.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># objective function</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">OptimisedSimpleTSPObjective</span><span class="p">(</span><span class="o">-</span><span class="n">matrix</span><span class="p">)</span>
+
+    <span class="c1"># Two-opt tweaks</span>
+    <span class="n">tweaker</span> <span class="o">=</span> <span class="n">TweakTwoOpt</span><span class="p">()</span>
+
+    <span class="c1"># local search for main GRASP = first improvement hill climbing</span>
+    <span class="n">ls1</span> <span class="o">=</span> <span class="n">HillClimber</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">tour</span><span class="p">,</span> <span class="n">tweaker</span><span class="p">)</span>
+
+    <span class="c1"># local search for path relinking = first improvement hill climbing</span>
+    <span class="n">ls2</span> <span class="o">=</span> <span class="n">HillClimber</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">tour</span><span class="p">,</span> <span class="n">tweaker</span><span class="p">)</span>
+
+    <span class="c1"># semi-greedy constructor and RCL sizer</span>
+    <span class="n">sizer</span> <span class="o">=</span> <span class="n">FixedRCLSizer</span><span class="p">(</span><span class="n">rcl_size</span><span class="p">)</span>
+    <span class="n">constructor</span> <span class="o">=</span> <span class="n">SemiGreedyConstructor</span><span class="p">(</span><span class="n">sizer</span><span class="p">,</span> <span class="n">tour</span><span class="p">,</span> <span class="o">-</span><span class="n">matrix</span><span class="p">,</span> 
+                                        <span class="n">random_seed</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># elite set tracker</span>
+    <span class="n">tracker</span> <span class="o">=</span> <span class="n">EliteSet</span><span class="p">(</span><span class="n">min_delta</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="n">elite_set_size</span><span class="p">)</span>
+
+    <span class="c1"># path relinking logic</span>
+    <span class="n">relinker</span> <span class="o">=</span> <span class="n">TSPPathRelinker</span><span class="p">(</span><span class="n">ls2</span><span class="p">,</span> <span class="n">tracker</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">trunc</span><span class="o">=</span><span class="n">pr_trunc</span><span class="p">,</span> 
+                               <span class="n">random_seed</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="c1"># evo path relinking logic</span>
+    <span class="n">evo_relinker</span> <span class="o">=</span> <span class="n">EvolutionaryPathRelinker</span><span class="p">(</span><span class="n">tracker</span><span class="p">,</span> <span class="n">relinker</span><span class="p">)</span>
+
+    <span class="c1"># GRASP + EVO PR framework</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">GRASPPlusEvoPathRelinking</span><span class="p">(</span><span class="n">constructor</span><span class="p">,</span> <span class="n">ls1</span><span class="p">,</span> <span class="n">relinker</span><span class="p">,</span> <span class="n">evo_relinker</span><span class="p">,</span> 
+                                       <span class="n">tracker</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">solver</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tour</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cities</span><span class="p">))</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">compose_grasp</span><span class="p">(</span><span class="n">tour</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">seeds</span><span class="o">=</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">1966</span><span class="p">),</span> <span class="n">rcl_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Running GRASP+EvPR&quot;</span><span class="p">)</span>
+<span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">** GRASP OUTPUT ***&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;best cost:</span><span class="se">\t</span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">best</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;best solutions:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">best_solution</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_tour</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">best_solution</span><span class="p">,</span> <span class="n">cities</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running GRASP+EvPR
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GRASP complete =&gt; running evolutionary path relinking
+
+** GRASP OUTPUT ***
+best cost:	-703.0
+best solutions:
+[ 0 35 28 12 69 34 68 30 37 58 21 65 62 56 14 23 18 25 54 48 27  7  2 31
+  6  1  3 17  5 40 41 43 13 19 29 26 45 44 24 38 60 39  8 67 42 16 20 33
+ 11 32 61 53 47 66 10 63 64 55 50 59 51  9  4 52 49 57 36 46 15 22]
+</pre></div>
+</div>
+<img alt="../_images/12_evo_pr_11_2.png" src="../_images/12_evo_pr_11_2.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "TomMonks/grasp_examples",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="11_grasp_pr.html" title="previous page">GRASP+PR</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Thomas Monks<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
